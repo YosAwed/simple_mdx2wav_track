@@ -435,8 +435,8 @@ int main(
 		_itoa_s(c_tr, ctr, sizeof(ctr), 10);
 		printf("Track number = %s\n", ctr);
 
-		char* tmp = _strdup(wavFilePath);
-		strcat_s(tmp, sizeof(tmp), ctr);
+		char tmp[200];
+		sprintf_s(tmp, 200,"%s%s%s", wavFilePath, ctr, ".wav");
 		printf("create %s \n", tmp);
 
 		/* wav ファイルに保存 */
