@@ -774,7 +774,7 @@ void Opm::pcmset62(int ndata, int c_tr) {
 
 			int OutInpOpm[2];
 			OutInpOpm[0] = OutInpOpm[1] = 0;
-			if (UseOpmFlag) {
+			if (UseOpmFlag && (c_tr<=7)) {
 #if X68SOUND_ENABLE_PORTABLE_CODE
 				RateForPcmset62 -= OpmRate;
 				while (RateForPcmset62 < 0) {
@@ -885,7 +885,7 @@ void Opm::pcmset62(int ndata, int c_tr) {
 //					OutInpOpm[1] = (InpOpm[1]*521) >> (5+9); // OPMとADPCMの音量バランス調整
 			}	// UseOpmFlag
 
-			if (UseAdpcmFlag) {
+			if (UseAdpcmFlag && (c_tr >= 8)) {
 				OutInpAdpcm[0] = OutInpAdpcm[1] = 0;
 				// OutInpAdpcm[] に Adpcm の出力PCMを加算
 				{
@@ -903,12 +903,12 @@ void Opm::pcmset62(int ndata, int c_tr) {
 
 				// OutInpAdpcm[] に Pcm8 の出力PCMを加算
 				{
-					int ch;
-					for (ch=0; ch<PCM8_NCH; ++ch) {
+//					int ch;
+//					for (ch=0; ch<PCM8_NCH; ++ch) {
 						int pan;
-						pan = pcm8[ch].GetMode();
+						pan = pcm8[c_tr-8].GetMode();
 						int	o;
-						o = pcm8[ch].GetPcm62();
+						o = pcm8[c_tr-8].GetPcm62();
 #if X68SOUND_ENABLE_PORTABLE_CODE
 						if (o != (int)0x80000000) {
 #else
@@ -916,7 +916,7 @@ void Opm::pcmset62(int ndata, int c_tr) {
 #endif
 								OutInpAdpcm[0] += (-(pan&1)) & o;
 								OutInpAdpcm[1] += (-((pan>>1)&1)) & o;
-						}
+//						}
 					}
 				}
 
@@ -1215,12 +1215,12 @@ void Opm::pcmset22(int ndata, int c_tr) {
 
 					// OutInpAdpcm[] に Pcm8 の出力PCMを加算
 					{
-						int ch;
-						for (ch=0; ch<PCM8_NCH; ++ch) {
+//						int ch;
+//						for (ch=0; ch<PCM8_NCH; ++ch) {
 							int pan;
-							pan = pcm8[ch].GetMode();
+							pan = pcm8[c_tr-8].GetMode();
 							int	o;
-							o = pcm8[ch].GetPcm();
+							o = pcm8[c_tr-8].GetPcm();
 #if X68SOUND_ENABLE_PORTABLE_CODE
 							if (o != (int)0x80000000) {
 #else
@@ -1229,7 +1229,7 @@ void Opm::pcmset22(int ndata, int c_tr) {
 								OutInpAdpcm[0] += (-(pan&1)) & o;
 								OutInpAdpcm[1] += (-((pan>>1)&1)) & o;
 							}
-						}
+//						}
 					}
 
 					// 全体の音量を調整
