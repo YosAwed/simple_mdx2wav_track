@@ -139,9 +139,9 @@ int main(
 	printf("Convert Start \n");
 
 	int c_tr;
-	char ctr[2] = { 0 };
+	char ctr[3] = { 0 };
 
-	for (c_tr = 0; c_tr < 8; c_tr++) {
+	for (c_tr = 0; c_tr < 16; c_tr++) {
 
 
 
@@ -270,7 +270,7 @@ int main(
 		printf("read %s ... ", pdxFilePath);
 		pdxFileImage = mallocReadFile(pdxFilePath, &pdxFileImageSizeInBytes);
 		if (pdxFileImage != NULL) {
-			printf("scceeded.\n");
+			printf("succeeded.\n");
 		} else {
 			printf("failed.\n");
 		}
@@ -308,7 +308,7 @@ int main(
 			printf("read %s ... ", pdxFilePath);
 			pdxFileImage = mallocReadFile(pdxFilePath, &pdxFileImageSizeInBytes);
 			if (pdxFileImage != NULL) {
-				printf("scceeded.\n");
+				printf("succeeded.\n");
 				break;
 			} else {
 				printf("failed.\n");
