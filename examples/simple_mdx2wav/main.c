@@ -409,13 +409,16 @@ int main(
 	) / 1000.0f;
 	printf("song duration %.1f(sec)\n", songDurationInSeconds);
 
-
 		/* MDX 再生 */
 		MXDRV_Play(
 			&context,
 			mdxBuffer, mdxBufferSizeInBytes,
 			pdxBuffer, pdxBufferSizeInBytes
 		);
+
+		uint16_t mask = ~(1 << c_tr);
+		MXDRV_Call_2(&context, 0x0e, mask);
+
 
 		/* wav 保存バッファの確保 */
 		int numSamples = (int)(SAMPLES_PER_SEC * songDurationInSeconds);
