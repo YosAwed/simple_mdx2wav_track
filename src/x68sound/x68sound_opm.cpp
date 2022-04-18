@@ -774,7 +774,7 @@ void Opm::pcmset62(int ndata, int c_tr) {
 
 			int OutInpOpm[2];
 			OutInpOpm[0] = OutInpOpm[1] = 0;
-			if (UseOpmFlag && (c_tr<=7)) {
+			if (UseOpmFlag) {
 #if X68SOUND_ENABLE_PORTABLE_CODE
 				RateForPcmset62 -= OpmRate;
 				while (RateForPcmset62 < 0) {
@@ -847,10 +847,11 @@ void Opm::pcmset62(int ndata, int c_tr) {
 									+ (OpOut[6] & pan[1][6])
 									+ (OpOut[7] & pan[1][7]);
 */
-                    // 1trackだけ書き出す
-                    OpmHpfInp[0] = (OpOut[c_tr] & pan[0][c_tr]);
-					OpmHpfInp[1] = (OpOut[c_tr] & pan[1][c_tr]);
-
+					if (c_tr <= 7) {
+						// 1trackだけ書き出す
+						OpmHpfInp[0] = (OpOut[c_tr] & pan[0][c_tr]);
+						OpmHpfInp[1] = (OpOut[c_tr] & pan[1][c_tr]);
+					}
 
 					OpmHpfInp[0] = (OpmHpfInp[0]&(int)0xFFFFFC00) << 4;
 					OpmHpfInp[1] = (OpmHpfInp[1]&(int)0xFFFFFC00) << 4;
@@ -1146,10 +1147,11 @@ void Opm::pcmset22(int ndata, int c_tr) {
 								+ (OpOut[6] & pan[1][6])
 								+ (OpOut[7] & pan[1][7]);
 */
-				// 1trackだけ書き出す
-				OpmHpfInp[0] = (OpOut[c_tr] & pan[0][c_tr]);
-				OpmHpfInp[1] = (OpOut[c_tr] & pan[1][c_tr]);
-
+					if (c_tr <= 7) {
+						// 1trackだけ書き出す
+						OpmHpfInp[0] = (OpOut[c_tr] & pan[0][c_tr]);
+						OpmHpfInp[1] = (OpOut[c_tr] & pan[1][c_tr]);
+					}
 					
 				{
 
@@ -1185,7 +1187,7 @@ void Opm::pcmset22(int ndata, int c_tr) {
 			Out[1] -= OutOpm[1]>>(5);
 		}
 
-		if (UseAdpcmFlag) {
+		if (UseAdpcmFlag && (c_tr >= 8)) {
 #if X68SOUND_ENABLE_PORTABLE_CODE
 				Rate2ForPcmset22 -= 15625;
 				if (Rate2ForPcmset22 < 0) {
