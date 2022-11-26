@@ -151,14 +151,14 @@ int main(
 	/* 引数解析 */
 	if (argc == 1) {
 		printf(
-			"Simple mdx -> wav converter\n"
+			"Simple mdx -> wav converter (each track)\n"
 			"usage:\n"
-			"	%s [options]\n"
+			"	%s [options (required)]\n"
 			"option:\n"
-			"	-i <mdxfilepath>:\n"
-			"		Specify a input mdx filepath.\n"
+			"	-i <mdxfile>:\n"
+			"		Specify a input mdx file.\n"
 			"	-o <wavfilepath>:\n"
-			"		Specify a output wav filepath.\n",
+			"		Specify a output wav file prefix name.\n",
 			argv[0]
 		);
 		exit(EXIT_SUCCESS);
